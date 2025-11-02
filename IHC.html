@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Estudante - UFPR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Definições Gerais */
+        :root {
+            --ufpr-blue: #0A3D62; /* Azul escuro principal (aproximado) */
+            --light-blue-bg: #EAF0F6; /* Fundo do banner de boas-vindas (aproximado) */
+            --header-blue: #3A7FA9; /* Azul do cabeçalho (aproximado) */
+            --section-bg: #F8F8F8; /* Fundo claro das seções */
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: white;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 1. CABEÇALHO SUPERIOR */
+        .main-header {
+            background-color: var(--header-blue);
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px; /* Ajuste o tamanho do logo */
+            margin-right: 10px;
+            filter: brightness(0) invert(1); /* Tenta simular um logo branco */
+        }
+
+        .logo h1 {
+            font-size: 1.4em;
+            font-weight: 400;
+        }
+
+        .search-bar {
+            display: flex;
+            background-color: white;
+            border-radius: 4px;
+            overflow: hidden;
+            width: 300px;
+        }
+
+        .search-bar input {
+            border: none;
+            padding: 8px 12px;
+            flex-grow: 1;
+            outline: none;
+        }
+
+        .search-bar button {
+            background-color: white;
+            border: none;
+            padding: 8px 12px;
+            color: #333;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        /* Ajuste do botão de busca para o ícone */
+        .search-bar button i {
+            font-size: 1.1em;
+            color: var(--header-blue);
+        }
+
+        .user-nav a {
+            color: white;
+            margin-left: 15px;
+            font-size: 1.2em;
+        }
+
+        /* 2. ÁREA DE BOAS-VINDAS */
+        .welcome-banner {
+            background-color: var(--light-blue-bg);
+            padding: 30px 20px;
+            color: var(--ufpr-blue);
+            border-bottom: 3px solid var(--header-blue); /* Adiciona a linha azul */
+        }
+
+        .welcome-banner h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .welcome-banner p {
+            max-width: 800px;
+            font-size: 1em;
+        }
+
+        /* 3. SEÇÕES DE CONTEÚDO */
+        h3 {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: var(--ufpr-blue);
+            margin-bottom: 20px;
+            padding-top: 20px;
+        }
+
+        /* ÚLTIMAS NOTÍCIAS */
+        .news-section {
+            background-color: #F0F5FA; /* Cor de fundo da seção de notícias (aproximado) */
+        }
+
+        .news-cards-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 20px;
+            align-items: center;
+        }
+
+        .news-card {
+            min-width: 300px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .news-card p {
+            padding: 15px;
+            font-weight: 400;
+            color: #555;
+            min-height: 70px;
+        }
+
+        .news-card.highlight {
+            background-color: var(--header-blue);
+            color: white;
+        }
+
+        .news-card.highlight p {
+            color: white;
+            font-weight: 700;
+        }
+
+        .arrow-right {
+            background: none;
+            border: none;
+            font-size: 2em;
+            color: var(--ufpr-blue);
+            cursor: pointer;
+            padding: 10px;
+            flex-shrink: 0;
+        }
+
+        /* SUGESTÕES */
+        .suggestions-cards-container {
+            display: flex;
+            gap: 20px;
+            justify-content: flex-start;
+            flex-wrap: wrap; /* Para melhor responsividade */
+        }
+
+        .suggestion-card {
+            flex: 1 1 300px; /* Cresce e encolhe, mas com tamanho base de 300px */
+            min-width: 300px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: relative; /* Para o overlay e texto interno */
+        }
+
+        .suggestion-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image-overlay {
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-end;
+            color: white;
+            padding: 10px;
+        }
+
+        .suggestion-card h4 {
+            /* Estilo do texto na imagem, como em "Estágio" */
+            font-size: 1.2em;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            margin-bottom: 5px;
+        }
+        
+        .suggestion-card p {
+            padding: 15px;
+            color: #555;
+        }
+
+        /* FAVORITOS */
+        .favorites-section {
+            padding-bottom: 40px;
+        }
+
+        .favorites-cards-container {
+            display: flex;
+            gap: 30px;
+        }
+
+        .favorite-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 150px;
+            cursor: pointer;
+        }
+
+        .favorite-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .favorite-card p {
+            font-weight: 500;
+            color: var(--ufpr-blue);
+        }
+
+        /* RODAPÉ */
+        .main-footer {
+            background-color: #333;
+            color: white;
+            padding: 30px 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .social-media {
+            flex-basis: 30%;
+        }
+
+        .social-media h4, .contact-info h4 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: white;
+        }
+
+        .social-media a {
+            color: white;
+            font-size: 1.5em;
+            margin-right: 15px;
+            transition: color 0.2s;
+        }
+
+        .social-media a:hover {
+            color: var(--header-blue);
+        }
+
+        .contact-info {
+            text-align: right;
+        }
+
+        .contact-info p {
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            font-weight: 300;
+        }
+
+        .contact-info p strong {
+             font-weight: 700;
+        }
+
+        .contact-info .phone-number {
+            margin-left: 20px; 
+            font-weight: 700;
+        }
+    </style>
+    </head>
+<body>
+
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-university" style="font-size: 40px; margin-right: 10px;"></i> 
+                <h1>Portal do Estudante</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar no portal...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <nav class="user-nav">
+                <a href="#"><i class="fas fa-globe"></i></a>
+                <a href="#"><i class="fas fa-user-circle"></i></a>
+                <a href="#"><i class="fas fa-chevron-down"></i></a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="welcome-banner">
+        <div class="content-wrapper">
+            <h2>Bem-vindo ao Portal do Estudante da UFPR</h2>
+            <p>Este espaço foi criado para facilitar sua trajetória na Universidade Federal do Paraná, reunindo em um único lugar informações úteis, principais recursos, informações e serviços que você precisa ao longo da sua jornada universitária.</p>
+        </div>
+    </section>
+
+    <section class="news-section content-wrapper">
+        <h3>Últimas Notícias</h3>
+        <div class="news-cards-container">
+
+            <div class="news-card">
+                <img src="https://via.placeholder.com/300x150/CCCCCC/888888?text=Pr%C3%A9dio+UFPR" alt="Prédio da UFPR"> 
+                <p>Conheça as principais **novidades** que a UFPR fez.</p>
+            </div>
+
+            <div class="news-card highlight">
+                <img src="https://via.placeholder.com/300x150/3A7FA9/FFFFFF?text=VESTIBULAR+UFPR+2026" alt="Banner Vestibular UFPR 2026"> 
+                <p>**Abertas as inscrições** para o vestibular de 2026.</p>
+            </div>
+
+            <div class="news-card highlight">
+                <img src="https://via.placeholder.com/300x150/00448A/FFFFFF?text=NOVO+CALEND%C3%81RIO+ACAD%C3%8AMICO" alt="Novo Calendário Acadêmico"> 
+                <p>**Não perca tempo** e venha conhecer o novo calendário acadêmico.</p>
+            </div>
+
+            <button class="arrow-right"><i class="fas fa-arrow-right"></i></button>
+        </div>
+    </section>
+
+    <section class="suggestions-section content-wrapper">
+        <h3>Sugestões</h3>
+        <div class="suggestions-cards-container">
+
+            <div class="suggestion-card">
+                <div class="card-image-overlay" style="background-image: url('https://via.placeholder.com/300x150/444444/FFFFFF?text=Restaurante+Universit%C3%A1rio');">
+                    <h4>Restaurante Universitário</h4>
+                </div>
+                <p>Confira o **cardápio de hoje**.</p>
+            </div>
+
+            <div class="suggestion-card">
+                <div class="card-image-overlay" style="background-image: url('https://via.placeholder.com/300x150/778899/FFFFFF?text=Est%C3%A1gio');">
+                    <h4>Vagas de Estágio</h4>
+                </div>
+                <p>**Não perca as últimas oportunidades** de estágio, se candidate agora.</p>
+            </div>
+
+            <div class="suggestion-card">
+                <div class="card-image-overlay" style="background-image: url('https://via.placeholder.com/300x150/5A5A5A/FFFFFF?text=Eventos+Acad%C3%AAmicos');">
+                    <h4>Eventos Acadêmicos</h4>
+                </div>
+                <p>**Confira a programação** para os próximos eventos que ocorrerem.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="favorites-section content-wrapper">
+        <h3>Seus Favoritos</h3>
+        <div class="favorites-cards-container">
+
+            <div class="favorite-card">
+                <img src="https://via.placeholder.com/100x100/0A3D62/FFFFFF?text=Biblioteca" alt="Ícone Biblioteca Online"> 
+                <p>Biblioteca Online</p>
+            </div>
+
+            <div class="favorite-card">
+                <img src="https://via.placeholder.com/100x100/0A3D62/FFFFFF?text=Acad%C3%AAmica" alt="Ícone Vida Acadêmica"> 
+                <p>Vida Acadêmica</p>
+            </div>
+            
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-content content-wrapper">
+            <div class="social-media">
+                <h4>Redes Sociais</h4>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+
+            <div class="contact-info">
+                <h4>Telefones para contato</h4>
+                <p>Coordenação do curso: **(41) 3361-4905**</p>
+                <p class="phone-number">**(41) 3361-4906**</p>
+                <p>Secretaria Online: **(41) 4002-9822**</p>
+                <p class="phone-number">**(41) 4003-9822**</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
